@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import os
 import datetime
 
 default = "No Value Set"
@@ -19,13 +20,20 @@ def application(environ, start_response):
     import pprint
     pprint.pprint(environ)
 
+    path = os.environ.get('SCRIPT_NAME', __name__)
+    month = datetime.datetime.now().strftime('%B')
+    year = datetime.datetime.now().year
+    date = datetime.datetime.now().date
+    client_ip = environ.get('REMOTE_ADDR', 'eeee')
+
+
     response_body = body.format(
         software=environ.get('SERVER_SOFTWARE', default),
-        path="aaaa",
-        month="bbbb",
-        date="cccc",
-        year="dddd",
-        client_ip="eeee"
+        path=path,
+        month=month,
+        date=date,
+        year=year,
+        client_ip=client_ip
     )
     status = '200 OK'
 
